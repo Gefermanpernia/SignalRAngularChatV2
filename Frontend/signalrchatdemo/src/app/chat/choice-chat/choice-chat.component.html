@@ -1,0 +1,14 @@
+<h1>My chats</h1>
+<div class="chat-container">
+    <div [routerLink]="['chat','chatroom',chat]" *ngFor="let chat of chatNames" class=chat-item>
+        <h1>
+            {{chat}}
+        </h1>
+    </div>
+</div>
+<div class="join-chat-container">
+
+    <label>Join a new Chat</label>
+    <input name="newName" type="text" [(ngModel)]="newChatName">
+    <button (click)="gotoNewChat()">Go</button>
+</div>

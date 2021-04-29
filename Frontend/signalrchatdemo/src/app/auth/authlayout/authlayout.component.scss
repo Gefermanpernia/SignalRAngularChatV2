@@ -1,0 +1,19 @@
+.login-container {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    min-height: 100vh;
+}
+
+.form-container {
+    grid-column: 2/3;
+    min-width: 100%;
+    background-image: linear-gradient(to right top, #0016ff, #002aff, #0038ff, #0043ff, #004dff, #0067ff, #007dff, #0090ff, #00b0ff, #00cbff, #00e3fd, #42f9ee);
+}
+
+.login-img {
+    grid-column: 1/2;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}

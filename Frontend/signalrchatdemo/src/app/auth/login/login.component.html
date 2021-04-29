@@ -1,0 +1,22 @@
+<div class="login-form">
+    <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+        <h2>Please login to access to the chat:</h2>
+        <div class="field-container">
+            <label>Email:</label>
+            <input formControlName="email" placeholder="example@test.com" type="email">
+            <small>
+              {{getEmailError()}}
+            </small>
+        </div>
+        <div class="field-container">
+            <label>Password:</label>
+            <input formControlName="password" placeholder="Enter your Password" type="password">
+            <small>
+              {{getPasswordError()}}
+            </small>
+        </div>
+        <button type="submit">Login</button>
+
+        <span>Don't have account yet? <a class="nav-li" routerLink="/auth/register">Register</a></span>
+    </form>
+</div>
