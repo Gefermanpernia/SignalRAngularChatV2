@@ -1,1 +1,21 @@
-<p>chat-room works!</p>
+<div class="Chat-Cointainer">
+  <div class="header">
+    <h1> {{ChatInfo.name}}</h1>
+  </div>
+  <div class="content">
+    <ol>
+      <li *ngFor="let message of ChatInfo.chatMessages">
+        <h2>{{message.userInfo.userName}}</h2>
+        <p>
+          {{message.content}}
+        </p>
+        <p><small>{{message.date | date }} </small></p>
+      </li>
+    </ol>
+  </div>
+  <div class="textBox">
+    <input type="text" #message>
+    <button (click)="sendMessage(message.value)">Send it</button>
+  </div>
+
+</div>

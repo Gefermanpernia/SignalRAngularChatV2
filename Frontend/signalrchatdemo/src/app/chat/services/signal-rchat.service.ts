@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from '../../../environments/environment.prod';
 import { ChatInfoDTO, ChatMessageDTO } from '../DTOs/ChatInfoDTO';
+import { SendMessageDTO } from '../DTOs/SendMessageDTO';
 import { userInfoDTO } from '../DTOs/userInfoDTO';
 
 @Injectable({
@@ -46,6 +47,17 @@ export class SignalRChatService {
     this.connection.send('joinRoom', roomName).then(c =>
       console.log(c)
       )
+  }
+
+  /**
+   * SendMessage
+   */
+  public SendMessage(sendmessage: SendMessageDTO) {
+
+    this.connection.send('sendMessage', sendmessage).then(Message =>{
+
+
+    })
   }
   buildConection(){
    this.connection = new signalR.HubConnectionBuilder()

@@ -68,7 +68,19 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
 
   }
+  sendMessage(message: string){
+    this.signalRChatService.SendMessage({content: message, roomName: this.ChatInfo.name});
 
+    this.ChatInfo.chatMessages.push({
+      content:message,
+      date: new Date(),
+      userInfo: {
+        userId: "sdfsafasf224",
+        userName: "Yo mismo soy"
+      },
+      id: 23523});
+
+  }
   ngOnDestroy(): void {
     this.$onUserLeaveSuscription.unsubscribe();
   }
