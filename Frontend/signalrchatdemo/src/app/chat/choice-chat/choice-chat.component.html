@@ -1,6 +1,6 @@
 <h1>My chats</h1>
 <div class="chat-container">
-    <div [routerLink]="['chat','chatroom',chat]" *ngFor="let chat of chatNames" class=chat-item>
+    <div [routerLink]="['/chat','chatroom',chat]" *ngFor="let chat of chatNames" class=chat-item>
         <h1>
             {{chat}}
         </h1>

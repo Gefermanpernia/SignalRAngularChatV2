@@ -84,7 +84,7 @@ namespace SignalRDemo
                 .WithOrigins("http://localhost:4200", "https://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin();
+                .AllowCredentials();
             services.AddCors(options =>
             {
                 options.AddPolicy("Development", corsPolicyBuilder.Build());
@@ -108,8 +108,8 @@ namespace SignalRDemo
             }
 
             app.UseHttpsRedirection();
-            app.UseCors("Development");
             app.UseRouting();
+            app.UseCors("Development");
             
             app.UseDefaultFiles();
             app.UseStaticFiles();

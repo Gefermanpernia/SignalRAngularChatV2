@@ -35,7 +35,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   private CreateSuscritionSignalR() {
 
     this.signalRChatService.$onChatInfo.subscribe(c => {
+
       this.ChatInfo = c;
+      console.log(this.ChatInfo);
     });
 
     this.signalRChatService.$onUserJoin.subscribe(userInfo => {

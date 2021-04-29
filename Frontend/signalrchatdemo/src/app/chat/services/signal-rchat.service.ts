@@ -49,6 +49,7 @@ export class SignalRChatService {
   }
   buildConection(){
    this.connection = new signalR.HubConnectionBuilder()
+
     .withUrl(`${this.baseUrl}chathub?access_token=${this.authService.token}`)
     .build();
 
