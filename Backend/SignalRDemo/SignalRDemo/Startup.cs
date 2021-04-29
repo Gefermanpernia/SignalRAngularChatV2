@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -82,9 +81,10 @@ namespace SignalRDemo
             });
 
             var corsPolicyBuilder = new CorsPolicyBuilder()
-                .WithOrigins("http://localhost:4200","https://localhost:4200")
+                .WithOrigins("http://localhost:4200", "https://localhost:4200")
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
             services.AddCors(options =>
             {
                 options.AddPolicy("Development", corsPolicyBuilder.Build());
@@ -111,13 +111,16 @@ namespace SignalRDemo
             app.UseCors("Development");
             app.UseRouting();
             
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("chathub");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }

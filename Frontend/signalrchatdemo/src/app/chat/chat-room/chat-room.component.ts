@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ChatInfoDTO } from '../DTOs/ChatInfoDTO';
 import { SignalRChatService } from '../services/signal-rchat.service';
 
 @Component({
@@ -9,7 +11,8 @@ import { SignalRChatService } from '../services/signal-rchat.service';
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {
 
-  constructor(private signalRChatService:SignalRChatService) {
+  constructor(private signalRChatService:SignalRChatService, private activatedRoute: ActivatedRoute) {
+    this.CreateSuscritionSignalR();
     this.checkSignalRConnection();
   }
 
@@ -18,10 +21,38 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
       this.signalRChatService.start()
       .then(()=> {
         this.signalRIsConnected=true;
+        let chatRoom = this.activatedRoute.snapshot.params.chatName;
+        this.signalRChatService.JoinRoom(chatRoom)
       })
     }
 
   }
+  ChatInfo: ChatInfoDTO= {
+    chatMessages: [],
+    integrants: [],
+    name: "",
+  };
+  private CreateSuscritionSignalR() {
+
+    this.signalRChatService.$onChatInfo.subscribe(c => {
+      this.ChatInfo = c;
+    });
+
+    this.signalRChatService.$onUserJoin.subscribe(userInfo => {
+      if(this.ChatInfo){
+        this.ChatInfo.integrants.push(userInfo);
+      }
+    })
+
+    this.signalRChatService.$onNewMessageREceived.subscribe(messsage => {
+      this.ChatInfo.chatMessages.push(messsage)
+    })
+
+    this.signalRChatService.$onUserLeave.subscribe(userLeave => {
+      this.ChatInfo.integrants = this.ChatInfo.integrants.filter(c => c.userId != userLeave.userId)
+    })
+  }
+
   signalRIsConnected:boolean = false;
   $onUserLeaveSuscription!:Subscription;
 
