@@ -4,6 +4,8 @@ export interface ChatInfoDTO {
   integrants: userInfoDTO[];
   name: string;
   chatMessages: ChatMessageDTO[];
+  id:number;
+  messagesCount:number;
 }
 
 export interface ChatMessageDTO{
@@ -11,4 +13,5 @@ export interface ChatMessageDTO{
   content: string;
   date: Date;
   userInfo: userInfoDTO;
+  temporalId?:string;
 }

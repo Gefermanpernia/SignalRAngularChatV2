@@ -1,14 +1,16 @@
-<h1>My chats</h1>
-<div class="chat-container">
-    <div [routerLink]="['/chat','chatroom',chat]" *ngFor="let chat of chatNames" class=chat-item>
-        <h1>
-            {{chat}}
-        </h1>
+<div class="outer-chat-container">
+    <h1>My current chats:</h1>
+    <div class="chat-container">
+        <div [routerLink]="['/chat','chatroom',chat]" *ngFor="let chat of chatNames" class=chat-item>
+            <h1>
+                {{chat}}
+            </h1>
+        </div>
     </div>
-</div>
-<div class="join-chat-container">
+    <h2>Add new chats here:</h2>
+    <div class="join-chat-container">
+        <input placeholder="Chat Name" name="newName" type="text" [(ngModel)]="newChatName">
+        <button (click)="gotoNewChat()">Add and Go!</button>
+    </div>
 
-    <label>Join a new Chat</label>
-    <input name="newName" type="text" [(ngModel)]="newChatName">
-    <button (click)="gotoNewChat()">Go</button>
 </div>

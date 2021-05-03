@@ -15,7 +15,6 @@ export class ChatlayoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-      console.log(this.authService.token);
 
   }
 

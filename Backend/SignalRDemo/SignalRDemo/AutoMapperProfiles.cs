@@ -9,9 +9,16 @@ namespace SignalRDemo
     {
         public AutoMapperProfiles()
         {
+
             CreateMap<ChatRoom, ChatInfoDTO>()
                 .ForMember(c => c.Integrants,
                 options => options.MapFrom(p => p.UserChats));
+            CreateMap<ChatRoom, SimpleChatInfoDTO>()
+                .ForMember(c => c.Integrants,
+                options => options.MapFrom(p => p.UserChats));
+
+            CreateMap<SimpleChatInfoDTO, ChatInfoDTO>();
+
 
             CreateMap<UserChatRoom, UserInfoDTO>()
                 .ForMember(u => u.UserName, options => options.MapFrom(u => u.User.UserName));

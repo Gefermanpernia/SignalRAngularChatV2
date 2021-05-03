@@ -1,19 +1,22 @@
 <div class="login-form">
-    <form>
+    <form (ngSubmit)="register()" [formGroup]="registerFormGroup">
         <h2>Create a new account to access to the chat</h2>
         <div class="field-container">
             <label>Email:</label>
-            <input placeholder="example@test.com" type="email">
+            <input formControlName="email" placeholder="example@test.com" type="email">
+            <small *ngIf="!formFieldIsValid('email')">Por favor ingrese un email valido</small>
         </div>
         <div class="field-container">
             <label>Username:</label>
-            <input placeholder="exampleusername" type="email">
+            <input formControlName="username" placeholder="exampleusername" type="text">
+            <small *ngIf="!formFieldIsValid('username')">Necesita ingresar un nombre de usuario</small>
         </div>
         <div class="field-container">
             <label>Password:</label>
-            <input placeholder="Enter your Password" type="password">
+            <input formControlName="password" placeholder="Enter your Password" type="password">
+            <small *ngIf="!formFieldIsValid('password')">La contraseña es requerida</small>
         </div>
-        <button type="button">Register</button>
+        <button type="submit">Register</button>
 
         <span>Already have an account? <a class="nav-li" routerLink="/auth/login">Login</a></span>
     </form>

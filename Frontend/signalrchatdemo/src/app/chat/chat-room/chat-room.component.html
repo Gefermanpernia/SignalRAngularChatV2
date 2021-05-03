@@ -1,21 +1,38 @@
-<div class="Chat-Cointainer">
-  <div class="header">
-    <h1> {{ChatInfo.name}}</h1>
-  </div>
-  <div class="content">
-    <ol>
-      <li *ngFor="let message of ChatInfo.chatMessages">
-        <h2>{{message.userInfo.userName}}</h2>
-        <p>
-          {{message.content}}
-        </p>
-        <p><small>{{message.date | date }} </small></p>
-      </li>
-    </ol>
-  </div>
-  <div class="textBox">
-    <input type="text" #message>
-    <button (click)="sendMessage(message.value)">Send it</button>
-  </div>
+<div class="chat-container-outer">
+    <button routerLink="/chat" class="backButton">
+    Go back
+  </button>
+    <div class="chat-cointainer">
+        <div class="header">
+            <h1> {{ChatInfo.name}}</h1>
+            <small>There are {{ChatInfo.integrants.length}} users in this chat</small>
+        </div>
+        <div class="content" (scroll)="messagesScroll($event)" #messages>
+            <ul>
+                <li [ngClass]="{'sending':message.temporalId
+                && message.id ==-1}" *ngFor="let message of ChatInfo.chatMessages">
+                    <div class="msg-info-container">
+                        <p>
 
+                            {{message.userInfo.userName}}
+                        </p>
+                        <p style="color:rgba(0,0,0,0.65)">{{message.date | date:'medium' }} </p>
+                    </div>
+                    <div class="msg-content-container">
+                        <p class="msg-content">{{message.content}}</p>
+                        <div class="loader" *ngIf="message.id ==-1 && message.temporalId">
+                            <img style="width:65px" src="../../../assets/images/Eclipse-1s-200px.svg">
+                        </div>
+                    </div>
+
+
+                </li>
+            </ul>
+        </div>
+        <div class="textBox">
+            <input (keypress)="keyPressOnInput($event)" placeholder="Escribe tu mensaje aqui!" type="text" [(ngModel)]="chatinputText">
+            <button (click)="sendMessage()">Send </button>
+        </div>
+
+    </div>
 </div>

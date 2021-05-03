@@ -7,6 +7,7 @@ using SignalRDemo.DTOs;
 using SignalRDemo.Entities;
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -160,20 +161,55 @@ namespace SignalRDemo.Repositories
 
         public async Task<ChatInfoDTO> GetChat(string roomName)
         {
-            var RoomQueryable = _applicationDbContext.ChatRooms
-                .Where(r => r.Name == roomName)
-                .Include(x => x.UserChats)
-                .ThenInclude(x => x.User)
-                .Include(x => x.ChatMessages)
-                .ThenInclude(c => c.User);
 
+            var RoomQueryable = 
+                _applicationDbContext.ChatRooms
+                .Where(r => r.Name == roomName);
 
-            return await _mapper
-                .ProjectTo<ChatInfoDTO>(RoomQueryable)
+            var simpleChatInfo = await _mapper
+                .ProjectTo<SimpleChatInfoDTO>(RoomQueryable)
                 .FirstOrDefaultAsync();
 
+            var chatInfo = _mapper.Map<ChatInfoDTO>(simpleChatInfo);
+            chatInfo.ChatMessages = await GetMessagesFromChat(chatInfo.Id, 20, 0);
+            chatInfo.MessagesCount = await GetMessagesCountOnChat(chatInfo.Id);
+            return chatInfo;
         }
 
+        public async Task<List<ChatMessageDTO>> GetMessagesFromChat(int chatId,int takeCount=20, int skipLastMessagesCount=0)
+        {
+
+            IQueryable<ChatMessage> chatMessagesQueryable = _applicationDbContext
+                .ChatMessages
+                .Where(c => c.ChatRoomId == chatId)
+                .OrderByDescending(c => c.Date); 
+
+            if (skipLastMessagesCount > 0)
+            {
+                chatMessagesQueryable =   chatMessagesQueryable.Skip(skipLastMessagesCount);
+            }
+
+            chatMessagesQueryable = chatMessagesQueryable.Take(takeCount);
+             
+        
+           var chatMessages = await _mapper
+                    .ProjectTo<ChatMessageDTO>(chatMessagesQueryable)
+                    .ToListAsync();
+
+                return chatMessages
+                .OrderBy(m => m.Date)
+                .ToList();
+      
+        }
+
+        public Task<int> GetMessagesCountOnChat(int chatId)
+        {
+            return _applicationDbContext
+                .ChatMessages
+                .Where(c => c.ChatRoomId == chatId)
+                .CountAsync();
+        }
+        
         public async Task<ChatMessageDTO> SendMessage(string userId , SendMessageDTO sendMessageDTO)
         {
 

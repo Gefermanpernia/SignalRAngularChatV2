@@ -4,5 +4,6 @@
     {
         public string RoomName { get; set; }
         public string Content { get; set; }
+        public string TemporalId { get; set; }
     }
 }

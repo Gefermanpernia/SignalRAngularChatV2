@@ -1,0 +1,78 @@
+@keyframes ldio-animation {
+    0% {
+        opacity: 0
+    }
+    20% {
+        opacity: 1
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+.loading-inner div {
+    position: absolute;
+    animation: ldio-animation 0.8s linear infinite;
+    box-sizing: border-box!important;
+}
+
+.loading-inner div:nth-child(1) {
+    width: 44px;
+    height: 44px;
+    left: 34px;
+    top: 128px;
+    border-radius: 50%;
+    background: #1d3f72;
+}
+
+.loading-inner div:nth-child(2) {
+    width: 66px;
+    height: 66px;
+    left: 56px;
+    top: 84px;
+    border-radius: 0 66px 0 0;
+    border: 20px solid #5699d2;
+    background: none;
+    animation-delay: 0.1s;
+    border-bottom: 0;
+    border-left: 0
+}
+
+.loading-inner div:nth-child(3) {
+    width: 110px;
+    height: 110px;
+    left: 56px;
+    top: 40px;
+    border-radius: 0 110px 0 0;
+    border: 20px solid #d8ebf9;
+    background: none;
+    animation-delay: 0.2s;
+    border-bottom: 0;
+    border-left: 0
+}
+
+.loading-outer {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.loading-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    position: absolute;
+    top: calc(50% - 100px);
+    left: calc(50% - 100px);
+    /* see note above */
+}
+
+.loading-inner div {
+    box-sizing: content-box;
+}

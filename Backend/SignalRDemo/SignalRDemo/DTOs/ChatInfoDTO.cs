@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace SignalRDemo.DTOs
 {
-    public class ChatInfoDTO
+    public class ChatInfoDTO :SimpleChatInfoDTO
     {
         public List<ChatMessageDTO> ChatMessages { get; set; } = new();
-        public string Name { get; set; }
-
-        public List<UserInfoDTO> Integrants { get; set; }
+     
+        public int MessagesCount { get; set; }
     }
 }

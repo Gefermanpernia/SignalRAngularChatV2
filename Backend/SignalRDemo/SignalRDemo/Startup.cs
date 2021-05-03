@@ -16,6 +16,7 @@ using SignalRDemo.Repositories;
 using SignalRDemo.Services;
 
 using System;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,7 +68,10 @@ namespace SignalRDemo
                      };
                  });
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

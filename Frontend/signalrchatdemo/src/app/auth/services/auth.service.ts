@@ -1,25 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { loginDTO } from '../DTOs/loginDTO';
 import { tap} from 'rxjs/operators'
 import { tokenResponseDTO } from '../DTOs/tokenResponseDTO';
 import { registerDTO } from '../DTOs/registerDTO';
 import { Observable } from 'rxjs';
+import { decodeAndGetPayload } from '../../shared/utils/JwtUtils';
+import { claimsInfo } from '../DTOs/claimsInfo';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnDestroy {
+export class AuthService  {
 
   constructor(private httpClient:HttpClient ) { }
-  ngOnDestroy(): void {
 
-
-    console.log("Destruyendo");
-  }
 
   // getters --
+
+
+
+  private _claimsInfo!:claimsInfo;
+  get claimsInfo(){
+    if(!this._claimsInfo){
+      this.decodeTokenClaims();
+    }
+
+    return this._claimsInfo;
+  }
+
+  set claimsInfo(value:claimsInfo){
+    this._claimsInfo = value;
+  }
+
   private _token!:string;
   get token ():string{
     if(!this._token){
@@ -86,19 +100,28 @@ export class AuthService implements OnDestroy {
   }
 
   private proccessTokenResponse(tokenResponseDTO:tokenResponseDTO){
-    debugger;
     if(tokenResponseDTO){
       this.tokenExpiration = tokenResponseDTO.expiration;
       this.token = tokenResponseDTO.token;
+      this.decodeTokenClaims();
+
     }
 
   }
 
+  private decodeTokenClaims(){
 
+    if(this.isLoggedIn()){
+      const token = this.token;
+      const payload = decodeAndGetPayload(token);
 
+      this.claimsInfo=
+      {
+        userId: payload[environment.claimTypes.userIdClaimType]
+      };
 
-
-
+    }
+  }
 
 
 }

@@ -1,29 +1,93 @@
-h1 {
-    text-align: center;
-}
-
-.chat-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-flow: row;
-    grid-gap: 20px;
-    .chat-item {
-        background-color: black;
-        h1 {
-            color: white;
+.outer-chat-container {
+    padding: 40px;
+    color: white;
+    h1 {
+        text-align: center;
+    }
+    .chat-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        @media screen and (max-width: 1600px) {
+            grid-template-columns: repeat(4, 1fr);
         }
-        padding:20px;
-        border-radius: 10px;
-        min-height: 50px;
-        min-width: 50px;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.3s;
-        &:hover {
-            color: black;
-            background: blue;
-            cursor: pointer;
+        grid-auto-flow: row;
+        grid-gap: 20px;
+        .chat-item {
+            background-color: rgba(0, 0, 0, 0.7);
+            h1 {
+                color: white;
+            }
+            padding:20px;
+            border-radius: 10px;
+            min-height: 50px;
+            min-width: 50px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            &:hover {
+                color: black;
+                background: blue;
+                cursor: pointer;
+            }
         }
     }
+    .join-chat-container {
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        input {
+            height: 40px;
+            background: none;
+            outline: none;
+            border: none;
+            border-bottom: white 2px solid;
+            color: white;
+        }
+        button {
+            height: 40px;
+            background: #00AFCB;
+            color: white;
+            transition: 0.5s;
+            border-radius: 2px;
+            margin-left: 10px;
+            outline: none;
+            border: none;
+            &:hover {
+                background: rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: white;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: white;
+}
+
+::placeholder {
+    /* Most modern browsers support this now. */
+    color: white;
 }
